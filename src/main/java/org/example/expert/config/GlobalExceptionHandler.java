@@ -16,9 +16,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidRequestException.class)
     public ResponseEntity<Map<String, Object>> invalidRequestExceptionException(InvalidRequestException ex) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        return getErrorResponse(status, ex.getMessage());
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("status", HttpStatus.NOT_FOUND.name());  // 404 상태 이름
+        errorResponse.put("code", HttpStatus.NOT_FOUND.value());    // 404 상태 코드
+        errorResponse.put("message", ex.getMessage());              // 예외 메시지
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);  // 404 상태 반환
     }
+
 
     @ExceptionHandler(AuthException.class)
     public ResponseEntity<Map<String, Object>> handleAuthException(AuthException ex) {
@@ -40,5 +45,6 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, status);
     }
+
 }
 
