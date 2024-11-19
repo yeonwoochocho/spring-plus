@@ -30,18 +30,19 @@ public class TodoService {
     private final WeatherClient weatherClient;
     private final PageableHandlerMethodArgumentResolver pageableResolver;
 
+    @Transactional
     public TodoSaveResponse saveTodo(AuthUser authUser, TodoSaveRequest todoSaveRequest) {
         User user = User.fromAuthUser(authUser);
 
         String weather = weatherClient.getTodayWeather();
 
-        Todo newTodo = new Todo(
+        Todo todo = new Todo(
                 todoSaveRequest.getTitle(),
                 todoSaveRequest.getContents(),
-                weather,
+                todoSaveRequest.getWeather(),
                 user
         );
-        Todo savedTodo = todoRepository.save(newTodo);
+        Todo savedTodo = todoRepository.save(todo);
 
         return new TodoSaveResponse(
                 savedTodo.getId(),

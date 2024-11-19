@@ -14,4 +14,6 @@ public class TodoSaveRequest {
     private String title;
     @NotBlank
     private String contents;
+
+    public String weather;
 }
