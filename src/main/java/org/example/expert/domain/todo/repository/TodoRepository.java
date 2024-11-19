@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
-public interface TodoRepository extends JpaRepository<Todo, Long> {
+public interface TodoRepository extends JpaRepository<Todo, Long>, TodoRepositoryCustom {
 
     // weather, startDate, endDate 조건을 반영한 JPQL 쿼리
     @Query("SELECT t FROM Todo t WHERE " +
